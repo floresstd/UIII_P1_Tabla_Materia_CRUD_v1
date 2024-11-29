@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block cuerpo %}
+    <div class="row"> <!--la fila-->
+
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4"><!--columna izquierda-->
+            <h1>Registrar Categoría</h1>
+            <div class="card"><!--Tarjeta-->
+              <div class="card-body">
+                <form action="/registrarCategoria/" method="POST">{% csrf_token %}<!--Formulario-->
+                  <div class="form-group">
+                    <input type="text" id="txtnombre" name="txtnombre" class="form-control"
+                    placeholder="Nombre de la Categoría" minLength="1" maxLength="255" required>
+                  </div>
+
+                  <div class="form-group py-3">
+                    <textarea id="txtdescripcion" name="txtdescripcion" class="form-control"
+                    placeholder="Descripción de la Categoría" minLength="1" required></textarea>
+                  </div>
+
+                  <div class="form-group py-2">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+                </form><!--Formulario-->
+              </div>
+            </div><!--Tarjeta-->
+        </div><!--columna izquierda-->
+
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8"><!--columna derecha-->
+            <h1>Listado de Categorías</h1>
+            <img class="w-50" src="{% static 'img/categorias.webp' %}" alt="Logo de la tienda" width="400" height="400">
+            <div class="table-responsive"><!--tabla responsiva-->
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripción</th>
+                        <th colspan="2">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for c in miscategorias %}
+                      <tr>
+                        <td>{{ c.id_categoria }}</td>
+                        <td>{{ c.Nombre }}</td>
+                        <td>{{ c.Descripcion }}</td>
+                        <td>
+                          <a href="seleccionarCategoria/{{ c.id_categoria }}" class="btn btn-info">Editar</a> <!--link de editar-->
+                        </td>
+                        <td>
+                          <a href="borrarCategoria/{{ c.id_categoria }}" class="btn btn-danger">Borrar</a> <!--link de borrar-->
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div><!--tabla responsiva-->
+        </div><!--columna derecha-->
+
+    </div> <!--la fila-->
+{% endblock %}
